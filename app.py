@@ -30,7 +30,7 @@ div[data-testid="metric-container"] {
 
 require_auth()
 
-# ── Sidebar ────────────────────────────────────────────────────────────────
+# ── Sidebar — sem st.page_link (causa bug DOM/React no Streamlit Cloud) ───
 with st.sidebar:
     try:
         st.image("assets/logo_sv.png", width=120)
@@ -40,14 +40,7 @@ with st.sidebar:
     st.markdown("**SIGPEC — Santa Vergínia**")
     st.caption("Sistema Integrado de Gestão Pecuária")
     st.markdown("---")
-
-    st.page_link("pages/01_cadastro.py",   label="📋 Cadastro",          icon="📋")
-    st.page_link("pages/02_pesagens.py",   label="⚖️ Pesagens",          icon="⚖️")
-    st.page_link("pages/03_manejo.py",     label="💉 Manejo Sanitário",  icon="💉")
-    st.page_link("pages/04_insumos.py",    label="🧪 Insumos",           icon="🧪")
-    st.page_link("pages/05_abate.py",      label="🔪 Abate",             icon="🔪")
-    st.page_link("pages/06_painel.py",     label="📊 Painel",            icon="📊")
-
+    st.caption("Navegue pelo menu acima ↑")
     st.markdown("---")
     if st.button("Sair", use_container_width=True):
         logout()
@@ -61,20 +54,19 @@ from utils.queries import resumo_rebanho, projecao_abate, gargalos_engorda
 import pandas as pd
 
 try:
-    resumo = resumo_rebanho()
+    resumo   = resumo_rebanho()
     projecao = projecao_abate()
     gargalos = gargalos_engorda()
 
     # ── KPIs por etapa ─────────────────────────────────────────────────────
     if resumo:
         df_res = pd.DataFrame(resumo)
-        total_geral = df_res["total_animais"].sum()
         etapas_ordem = ["nascimento", "cria", "recria", "desmama", "engorda", "abate"]
 
         st.subheader("Rebanho atual")
         cols = st.columns(len(etapas_ordem))
         for i, etapa in enumerate(etapas_ordem):
-            sub = df_res[df_res["etapa_atual"] == etapa]
+            sub   = df_res[df_res["etapa_atual"] == etapa]
             total = int(sub["total_animais"].sum()) if not sub.empty else 0
             cols[i].metric(etapa.capitalize(), total)
 
