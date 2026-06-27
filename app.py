@@ -1,4 +1,6 @@
 import streamlit as st
+import base64
+from pathlib import Path
 
 st.set_page_config(
     page_title="SIGPEC — Santa Vergínia",
@@ -13,15 +15,15 @@ if not st.session_state["autenticado"]:
     st.markdown("""
     <style>
     [data-testid="stAppViewContainer"] {
-        background-image: url("https://images.unsplash.com/photo-1605152276897-4f618f831968?w=1800&q=80");
+        background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Nelore_cattle_on_pasture.jpg/1280px-Nelore_cattle_on_pasture.jpg");
         background-size: cover;
-        background-position: center 60%;
+        background-position: center;
     }
     [data-testid="stAppViewContainer"]::before {
         content: "";
         position: fixed;
         top: 0; left: 0; right: 0; bottom: 0;
-        background: rgba(3, 12, 3, 0.68);
+        background: rgba(3, 12, 3, 0.70);
         z-index: 0;
     }
     [data-testid="stAppViewContainer"] > * { position: relative; z-index: 1; }
@@ -56,7 +58,6 @@ if not st.session_state["autenticado"]:
                 st.error("PIN incorreto.")
     st.stop()
 
-# App autenticado
 with st.sidebar:
     try:
         st.image("assets/logo_sv.png", width=120)
