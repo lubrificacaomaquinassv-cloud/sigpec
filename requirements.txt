@@ -1,4 +1,4 @@
-streamlit==1.45.0
+streamlit==1.41.1
 psycopg[binary]==3.2.9
 pandas
 plotly==5.20.0
