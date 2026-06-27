@@ -1,6 +1,4 @@
 import streamlit as st
-import base64
-from pathlib import Path
 
 st.set_page_config(
     page_title="SIGPEC — Santa Vergínia",
@@ -15,7 +13,7 @@ if not st.session_state["autenticado"]:
     st.markdown("""
     <style>
     [data-testid="stAppViewContainer"] {
-        background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Nelore_cattle_on_pasture.jpg/1280px-Nelore_cattle_on_pasture.jpg");
+        background-image: url("https://images.unsplash.com/photo-1570042225831-d98fa7577f1e?w=1600&q=80");
         background-size: cover;
         background-position: center;
     }
@@ -23,33 +21,34 @@ if not st.session_state["autenticado"]:
         content: "";
         position: fixed;
         top: 0; left: 0; right: 0; bottom: 0;
-        background: rgba(3, 12, 3, 0.70);
+        background: rgba(5, 20, 5, 0.72);
         z-index: 0;
     }
     [data-testid="stAppViewContainer"] > * { position: relative; z-index: 1; }
-    [data-testid="stHeader"] { background: transparent !important; }
-    [data-testid="stSidebar"] { display: none !important; }
+    [data-testid="stHeader"] { background: transparent; }
+    [data-testid="stSidebar"] { display: none; }
+    .login-box {
+        max-width: 420px;
+        padding: 2rem;
+    }
     </style>
     """, unsafe_allow_html=True)
 
     col1, col2 = st.columns([1, 2])
     with col1:
         try:
-            st.image("assets/logo_sv.png", width=160)
+            st.image("assets/logo_sv.png", width=150)
         except:
             pass
     with col2:
-        st.markdown("## SIGPEC — SANTA VERGÍNIA")
-        st.caption("Acesso restrito — SIGPEC Santa Vergínia")
+        st.markdown("## SIGPEC — Santa Vergínia")
+        st.caption("Sistema Integrado de Gestão Pecuária")
         st.markdown("[@fazendasantaverginia](https://instagram.com/fazendasantaverginia)")
 
     st.markdown("---")
-    col_pin, col_btn, col_esp = st.columns([1.2, 0.8, 2])
-    with col_pin:
-        st.caption("PIN de acesso")
-        pin = st.text_input("", type="password", key="pin_input", label_visibility="collapsed")
-    with col_btn:
-        st.markdown("<br>", unsafe_allow_html=True)
+    col_a, col_b, col_c = st.columns([1, 1, 2])
+    with col_a:
+        pin = st.text_input("PIN de acesso", type="password", key="pin_input")
         if st.button("Entrar", type="primary", use_container_width=True):
             if pin == st.secrets.get("PIN_ACESSO", "SV2027"):
                 st.session_state["autenticado"] = True
@@ -58,6 +57,7 @@ if not st.session_state["autenticado"]:
                 st.error("PIN incorreto.")
     st.stop()
 
+# App autenticado
 with st.sidebar:
     try:
         st.image("assets/logo_sv.png", width=120)
